@@ -1,7 +1,7 @@
 {
   "name": "@cnydw/jupyterlab_hackernews",
   "version": "0.1.0",
-  "description": "An extension for latest hackernews",
+  "description": "An extension for the latest hackernews",
   "keywords": [
     "jupyter",
     "jupyterlab",

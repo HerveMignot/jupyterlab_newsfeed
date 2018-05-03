@@ -1,6 +1,6 @@
 # jupyterlab_hackernews
 
-a extension for latest hackernews
+An extension for the latest hackernews
 
 
 ## Prerequisites
