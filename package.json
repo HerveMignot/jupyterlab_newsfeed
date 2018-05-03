@@ -1,0 +1,45 @@
+{
+  "name": "@cnydw/jupyterlab_hackernews",
+  "version": "0.1.0",
+  "description": "An extension for latest hackernews",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/cnydw/jupyterlab_hackernews",
+  "bugs": {
+    "url": "https://github.com/cnydw/jupyterlab_hackernews/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "cnydw",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cnydw/jupyterlab_hackernews.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^0.16.0",
+    "@jupyterlab/apputils": "^0.16.4",
+    "@phosphor/coreutils": "^1.3.0",
+    "@phosphor/messaging": "^1.2.2",
+    "@phosphor/widgets": "^1.5.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1",
+    "typescript": "~2.6.0"
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}
