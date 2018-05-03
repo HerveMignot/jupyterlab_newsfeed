@@ -26,21 +26,67 @@ class HNWidget extends Widget {
     this.addClass('jp-hnWidget');
     this.div = document.createElement('div');
     this.node.appendChild(this.div);
-  }
-  readonly div: HTMLDivElement;
+    this.page = 1;
 
-  onUpdateRequest(msg: Message): void {
-    this.div.innerHTML='<h1>Hacker News</h1>';
-    fetch('https://hn.algolia.com/api/v1/search?tags=front_page').then(response => {
+    let previousButton = document.createElement('button');
+    previousButton.className = 'jp-hn-buttons';
+    previousButton.innerText = "Previous Page";
+    previousButton.onclick = ()=>this.modifyPage(this.page-1);
+
+    let nextButton = document.createElement('button');
+    nextButton.className = 'jp-hn-buttons';
+    nextButton.onclick = ()=>this.modifyPage(this.page +1);
+    nextButton.innerText = "Next Page";
+
+    let buttons = document.createElement('div');    
+    buttons.appendChild(previousButton);
+    buttons.appendChild(nextButton);
+    buttons.style.display = 'flex';
+    buttons.style.justifyContent = 'space-between'
+
+    this.warning = document.createElement('h2');
+    this.warning.style.color = 'red';
+    this.div.insertAdjacentElement('afterend', this.warning);
+    this.div.insertAdjacentElement('afterend', buttons);
+  }
+
+  readonly div: HTMLDivElement;
+  readonly warning: HTMLHeadingElement;
+  page: number;
+
+  fetchNews(){
+    fetch(`http://hn.algolia.com/api/v1/search_by_date?tags=story&page=${this.page}`).then(response => {
       return response.json();
     }).then(data => {
       data.hits.forEach((element:any) => {
         console.log(element);
-        this.div.innerHTML+= `<div style="display: flex"><span style="width: 50%"><a href="${element.url}" target="_blank">
-          ${element.title}</a></span><span style="width: 20%">
-         ${element.author} </span>  ${new Date(element.created_at).toLocaleString()}</div>`
+        this.div.innerHTML+= `<div class="jp-hn-news">
+          <span style="width: 65%">
+          <a href="${element.url}" target="_blank">${element.title}</a>
+          </span>
+          <span style="width: 15%">${element.author} </span> 
+          <span style="width: 20%;text-align: right"> ${new Date(element.created_at).toLocaleString()}</span>
+          </div>`
       });
     });
+  }
+
+  modifyPage(page: number){
+    if(page < 1) {
+      // this.warning.innerText += '<h3 style="color: red">This is the first page</h3>';
+      this.warning.innerText = "This is already the first page :)";
+      return;
+    } else {
+      this.warning.innerText = "";
+      this.page = page;
+      this.div.innerHTML='<h1>Hacker News</h1>';
+      this.fetchNews()
+    }
+  }
+
+  onUpdateRequest(msg: Message): void {
+    this.div.innerHTML='<h1>Hacker News</h1>';
+    this.fetchNews();
   }
 }
 
